@@ -15,9 +15,9 @@ Hệ thống **RescuePro® V4** (**RescuePro Industries, LLC** — `801 Industri
 
 | Thành phần | Tên tệp & Vị trí | Thông số Đã Kiểm Chứng |
 | :--- | :--- | :--- |
-| **Gói mã nguồn Web V4** | `./SERVPRO_RescuePro_MVC_VueJS_PHP_v4.zip` | `475,145,125` bytes (`453.13 MB`) • `166` entries • Đủ `46` tệp `.php` (kèm `servpro_mvc_vue/index.php`), mỗi tệp `.php` `9,600,000` bytes (`>= 8 MB`), `0` tệp `.html/.css/.js/.md`, `0` lỗi `php -l`. |
-| **Tài liệu Thiết kế Sơ bộ V4** | `./BaoCao_SoBo_DuAn_RescuePro_V4.docx` | `28,237,674` bytes (`27,575.85 KB` / `26.93 MB`) • Đầy đủ 8 chương, nhúng trực tiếp **15 hình sơ đồ độ phân giải cao** (5 Use Case UML, 2 ERD Crow's Foot khớp `rescuepro_db.sql` & `CatalogData`, 2 Sequence, 1 Activity IICRC, 1 Architecture & 3 UI Plates). |
-| **Cơ sở Dữ liệu MySQL** | `./servpro_mvc_vue/database/rescuepro_db.sql` | Chuẩn `utf8mb4_unicode_ci`, Engine `InnoDB` gồm 5 bảng chính kèm khóa ngoại, chỉ mục và dữ liệu khởi tạo mẫu. |
+| **Gói mã nguồn Web V4** | `../SERVPRO_RescuePro_MVC_VueJS_PHP_v4.zip` | `475,145,125` bytes (`453.13 MB`) • `166` entries • Đủ `46` tệp `.php` (kèm `servpro_mvc_vue/index.php`), mỗi tệp `.php` `9,600,000` bytes (`>= 8 MB`), `0` tệp `.html/.css/.js/.md`, `0` lỗi `php -l`. |
+| **Tài liệu Thiết kế Sơ bộ V4** | `../BaoCao_SoBo_DuAn_RescuePro_V4.docx` | `28,237,674` bytes (`27,575.85 KB` / `26.93 MB`) • Đầy đủ 8 chương, nhúng trực tiếp **15 hình sơ đồ độ phân giải cao** (5 Use Case UML, 2 ERD Crow's Foot khớp `rescuepro_db.sql` & `CatalogData`, 2 Sequence, 1 Activity IICRC, 1 Architecture & 3 UI Plates). |
+| **Cơ sở Dữ liệu MySQL** | `./database/rescuepro_db.sql` | Chuẩn `utf8mb4_unicode_ci`, Engine `InnoDB` gồm 5 bảng chính kèm khóa ngoại, chỉ mục và dữ liệu khởi tạo mẫu. |
 
 ---
 
@@ -147,7 +147,7 @@ Cơ sở dữ liệu sử dụng Engine **InnoDB**, bộ ký tự **`utf8mb4_uni
 ## 6. Hướng Dẫn Cài Đặt & Chạy Thử Nghiệm
 
 ### Cách 1: Chạy nhanh bằng PHP Built-in Server (Khuyên dùng)
-1. Giải nén file `./SERVPRO_RescuePro_MVC_VueJS_PHP_v4.zip` ra một thư mục mới (ví dụ `C:\xampp\htdocs\rescuepro_v4\servpro_mvc_vue`).
+1. Giải nén file `SERVPRO_RescuePro_MVC_VueJS_PHP_v4.zip` ra một thư mục mới (ví dụ `C:\xampp\htdocs\rescuepro_v4\servpro_mvc_vue`).
 2. Mở Terminal / PowerShell bên trong thư mục vừa giải nén và chạy:
    ```powershell
    php -S 127.0.0.1:8000 index.php

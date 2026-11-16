@@ -1,0 +1,139 @@
+<?php
+declare(strict_types=1);
+
+require __DIR__ . '/config/config.php';
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_set_cookie_params([
+        'httponly' => true,
+        'samesite' => 'Lax',
+        'secure' => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off',
+    ]);
+    session_start();
+}
+
+require __DIR__ . '/app/Core/helpers.php';
+
+spl_autoload_register(function (string $class): void {
+    $prefix = 'App\\';
+    if (str_starts_with($class, $prefix)) {
+        $file = __DIR__ . '/app/' . str_replace('\\', '/', substr($class, strlen($prefix))) . '.php';
+        if (is_file($file)) {
+            require $file;
+        }
+    }
+});
+
+$router = new App\Core\Router();
+
+// Main Public & Company Pages
+$router->get('/', [App\Controllers\HomeController::class, 'index']);
+$router->get('/why', [App\Controllers\HomeController::class, 'why']);
+$router->get('/why-servpro', [App\Controllers\HomeController::class, 'why']);
+$router->get('/why-rescuepro', [App\Controllers\HomeController::class, 'why']);
+$router->get('/about', [App\Controllers\HomeController::class, 'why']);
+$router->get('/about/history', [App\Controllers\HomeController::class, 'why']);
+$router->get('/about/news-press-releases', [App\Controllers\HomeController::class, 'why']);
+$router->get('/about/news/community', [App\Controllers\HomeController::class, 'why']);
+$router->get('/about/preferred-vendor', [App\Controllers\HomeController::class, 'preferredVendor']);
+$router->get('/preferred-vendor', [App\Controllers\HomeController::class, 'preferredVendor']);
+$router->get('/locations', [App\Controllers\HomeController::class, 'locations']);
+$router->get('/lookup', [App\Controllers\HomeController::class, 'locations']);
+$router->get('/contact', [App\Controllers\HomeController::class, 'contact']);
+$router->get('/contact-us', [App\Controllers\HomeController::class, 'contact']);
+
+// Legal & Trust Center Pages
+$router->get('/terms-of-service', [App\Controllers\HomeController::class, 'terms']);
+$router->get('/terms', [App\Controllers\HomeController::class, 'terms']);
+$router->get('/privacy-policy', [App\Controllers\HomeController::class, 'privacy']);
+$router->get('/privacy', [App\Controllers\HomeController::class, 'privacy']);
+$router->get('/accessibility', [App\Controllers\HomeController::class, 'accessibility']);
+$router->get('/sitemap', [App\Controllers\HomeController::class, 'sitemap']);
+$router->get('/site-map', [App\Controllers\HomeController::class, 'sitemap']);
+
+// Core Restoration & Cleaning Services
+$router->get('/service/water', [App\Controllers\ServiceController::class, 'water']);
+$router->get('/services/water-damage', [App\Controllers\ServiceController::class, 'water']);
+$router->get('/water-damage-restoration', [App\Controllers\ServiceController::class, 'water']);
+$router->get('/service/fire', [App\Controllers\ServiceController::class, 'fire']);
+$router->get('/services/fire-damage', [App\Controllers\ServiceController::class, 'fire']);
+$router->get('/fire-damage-restoration', [App\Controllers\ServiceController::class, 'fire']);
+$router->get('/service/mold', [App\Controllers\ServiceController::class, 'mold']);
+$router->get('/services/mold-remediation', [App\Controllers\ServiceController::class, 'mold']);
+$router->get('/mold-remediation', [App\Controllers\ServiceController::class, 'mold']);
+$router->get('/service/storm', [App\Controllers\ServiceController::class, 'storm']);
+$router->get('/services/storm-damage', [App\Controllers\ServiceController::class, 'storm']);
+$router->get('/storm-damage-restoration', [App\Controllers\ServiceController::class, 'storm']);
+$router->get('/service/construction', [App\Controllers\ServiceController::class, 'construction']);
+$router->get('/services/construction', [App\Controllers\ServiceController::class, 'construction']);
+$router->get('/construction-services', [App\Controllers\ServiceController::class, 'construction']);
+$router->get('/service/biohazard', [App\Controllers\ServiceController::class, 'biohazard']);
+$router->get('/services/biohazard-cleaning', [App\Controllers\ServiceController::class, 'biohazard']);
+$router->get('/cleaning/biohazard', [App\Controllers\ServiceController::class, 'biohazard']);
+$router->get('/service/cleaning', [App\Controllers\ServiceController::class, 'cleaning']);
+$router->get('/cleaning', [App\Controllers\ServiceController::class, 'cleaning']);
+$router->get('/resources/general-cleaning', [App\Controllers\ServiceController::class, 'cleaning']);
+$router->get('/service/specialty-cleaning', [App\Controllers\ServiceController::class, 'specialty']);
+$router->get('/services/specialty-cleaning', [App\Controllers\ServiceController::class, 'specialty']);
+$router->get('/cleaning/specialty', [App\Controllers\ServiceController::class, 'specialty']);
+
+// Commercial & Emergency Ready Plan (ERP)
+$router->get('/commercial', [App\Controllers\CommercialController::class, 'index']);
+$router->get('/commercial-services', [App\Controllers\CommercialController::class, 'index']);
+$router->get('/commercial/large-loss', [App\Controllers\CommercialController::class, 'index']);
+$router->get('/commercial/erp', [App\Controllers\CommercialController::class, 'erp']);
+$router->get('/commercial/emergency-ready-plan', [App\Controllers\CommercialController::class, 'erp']);
+
+// Resources, Dedicated FAQ, Article Reader, Glossary & Insurance Professionals
+$router->get('/resources', [App\Controllers\ResourceController::class, 'index']);
+$router->get('/resources/glossary', [App\Controllers\ResourceController::class, 'index']);
+$router->get('/resources/article', [App\Controllers\ResourceController::class, 'article']);
+$router->get('/faq', [App\Controllers\ResourceController::class, 'faq']);
+$router->get('/faqs', [App\Controllers\ResourceController::class, 'faq']);
+$router->get('/resources/faq', [App\Controllers\ResourceController::class, 'faq']);
+$router->get('/insurance', [App\Controllers\ResourceController::class, 'insurance']);
+$router->get('/insurance-claims', [App\Controllers\ResourceController::class, 'insurance']);
+$router->get('/resources/for-insurance-professionals', [App\Controllers\ResourceController::class, 'insurance']);
+
+// Careers & Own a Franchise
+$router->get('/careers', [App\Controllers\CareerController::class, 'index']);
+$router->get('/careers/headquarters', [App\Controllers\CareerController::class, 'index']);
+$router->get('/franchise', [App\Controllers\CareerController::class, 'franchise']);
+$router->get('/franchise-ownership', [App\Controllers\CareerController::class, 'franchise']);
+$router->get('/careers/franchise', [App\Controllers\CareerController::class, 'franchise']);
+
+// Auth Routes
+$router->get('/login', [App\Controllers\AuthController::class, 'login']);
+$router->post('/login', [App\Controllers\AuthController::class, 'login']);
+$router->get('/register', [App\Controllers\AuthController::class, 'register']);
+$router->post('/register', [App\Controllers\AuthController::class, 'register']);
+$router->post('/logout', [App\Controllers\AuthController::class, 'logout']);
+
+// Interactive Dispatch, Requests & API
+$router->get('/request-help', [App\Controllers\HomeController::class, 'index']);
+$router->post('/request', [App\Controllers\RequestController::class, 'store']);
+$router->post('/contact-submit', [App\Controllers\RequestController::class, 'storeContactInquiry']);
+$router->post('/franchise-inquiry', [App\Controllers\RequestController::class, 'storeFranchiseInquiry']);
+$router->post('/ce-register', [App\Controllers\RequestController::class, 'storeCeRegistration']);
+$router->post('/erp-save', [App\Controllers\RequestController::class, 'storeErpProfile']);
+$router->get('/api/locations', [App\Controllers\RequestController::class, 'locationsJson']);
+
+// Authenticated Portals
+$router->get('/portal', [App\Controllers\PortalController::class, 'index']);
+$router->get('/admin', [App\Controllers\AdminController::class, 'index']);
+$router->post('/admin/update', [App\Controllers\AdminController::class, 'update']);
+
+$path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
+$base = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '')), '/');
+if ($base !== '' && $base !== '/' && str_starts_with($path, $base)) {
+    $path = substr($path, strlen($base)) ?: '/';
+}
+if (str_starts_with($path, '/index.php')) {
+    $path = substr($path, 10) ?: '/';
+}
+$path = '/' . trim($path, '/');
+if ($path === '//') {
+    $path = '/';
+}
+
+$router->dispatch($_SERVER['REQUEST_METHOD'] ?? 'GET', $path);
